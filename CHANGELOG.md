@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.4](https://github.com/Wykks/ngx-mapbox-gl/compare/v6.0.3...v6.0.4) (2021-02-17)
+
+### [6.0.3](https://github.com/Wykks/ngx-mapbox-gl/compare/v6.0.2...v6.0.3) (2021-02-09)
+
+### Bug Fixes
+
+- Position interface ([#278](https://github.com/Wykks/ngx-mapbox-gl/issues/278)) ([d0658ba](https://github.com/Wykks/ngx-mapbox-gl/commit/d0658bac64b18cc6132697b7ecbecc076e25d06d))
+
+### [6.0.2](https://github.com/Wykks/ngx-mapbox-gl/compare/v6.0.1...v6.0.2) (2021-02-09)
+
+### Bug Fixes
+
+- declare Position interface for geolocate-control ([#276](https://github.com/Wykks/ngx-mapbox-gl/issues/276)) ([5bc2639](https://github.com/Wykks/ngx-mapbox-gl/commit/5bc263949bb975604a177a249bec0f4483fa0395))
+
+### [6.0.1](https://github.com/Wykks/ngx-mapbox-gl/compare/v6.0.0...v6.0.1) (2021-02-03)
+
+### Bug Fixes
+
+- **deps:** add @types/mapbox\_\_mapbox-gl-geocoder ([#274](https://github.com/Wykks/ngx-mapbox-gl/issues/274)) ([e4b058c](https://github.com/Wykks/ngx-mapbox-gl/commit/e4b058c54b36871ce0c57991862d2e5668147793))
+
+## [6.0.0](https://github.com/Wykks/ngx-mapbox-gl/compare/v5.0.0...v6.0.0) (2021-01-29)
+
+### ⚠ BREAKING CHANGES
+
+- Updating mapbox-gl from 1.1.0 to 2.0.1 may break existing code
+- Dropped Angular 8 support
+
+### Features
+
+- Update to mapbox-gl 2.0.1
+- Add Angular 11 support
+
+## [5.0.0](https://github.com/Wykks/ngx-mapbox-gl/compare/v4.8.1...v5.0.0) (2020-12-13)
+
+### ⚠ BREAKING CHANGES
+
+- **mglDraggable:** Remove marker support for mglDraggable (use draggable input instead)
+- Remove undocumented resize API
+- Updating mapbox-gl from 1.1.0 to 1.12.0 may cause breaking change
+
+### Features
+
+- update to mapbox-gl 1.13.0 ([a8b7eea](https://github.com/Wykks/ngx-mapbox-gl/commit/a8b7eeaf8620affffd19a9883ca1d350c3d76b79))
+- **mglDraggable:** remove marker support ([7e14744](https://github.com/Wykks/ngx-mapbox-gl/commit/7e1474424fcadaf3b101a6922d80674bab222767))
+- update to mapbox-gl 1.12.0 ([#253](https://github.com/Wykks/ngx-mapbox-gl/issues/253)) ([eddbda7](https://github.com/Wykks/ngx-mapbox-gl/commit/eddbda75369e5096bca2b6edc4a66a90a909694b))
+
+### Bug Fixes
+
+- **draggable:** fix incorrect use of takeUntil ([f8a7698](https://github.com/Wykks/ngx-mapbox-gl/commit/f8a7698ad585bd8f3974023ec42a3e7dd13618e8))
+- Change many outputs to avoid confusion (fix [#107](https://github.com/Wykks/ngx-mapbox-gl/issues/107)) ([7b50fd8](https://github.com/Wykks/ngx-mapbox-gl/commit/7b50fd839289d7f0fe497b10d570061cbe3bc332))
+
+### showcase
+
+- refactor whole app & add doc versionning ([33bb369](https://github.com/Wykks/ngx-mapbox-gl/commit/33bb369e91f6fcf16793b8370bcfd29d91fd885f))
+
 ### [4.8.1](https://github.com/Wykks/ngx-mapbox-gl/compare/v4.8.0...v4.8.1) (2020-07-24)
 
 ### Bug Fixes

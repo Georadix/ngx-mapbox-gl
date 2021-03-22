@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
+import { Position } from 'ngx-mapbox-gl'
 
 @Component({
   selector: 'showcase-demo',
   template: `
     <mgl-map [style]="'mapbox://styles/mapbox/streets-v9'">
       <mgl-control>
-        <button mat-fab color="primary" class="custom-control" (click)="alert('Hello')">
+        <button
+          mat-fab
+          color="primary"
+          class="custom-control"
+          (click)="alert('Hello')"
+        >
           Hello
         </button>
       </mgl-control>
@@ -13,7 +19,11 @@ import { Component } from '@angular/core';
       <mgl-control mglAttribution position="top-right"></mgl-control>
       <mgl-control mglFullscreen position="top-right"></mgl-control>
       <mgl-control mglGeocoder position="top-right"></mgl-control>
-      <mgl-control mglGeolocate position="top-right" (geolocate)="onGeolocate($event)"></mgl-control>
+      <mgl-control
+        mglGeolocate
+        position="top-right"
+        (geolocate)="onGeolocate($event)"
+      ></mgl-control>
       <mgl-control mglNavigation position="top-right"></mgl-control>
       <mgl-control mglScale position="top-right"></mgl-control>
     </mgl-map>

@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Dictionary } from 'lodash';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
 
 const FILES_PATH = 'app/demo/examples/';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DemoFileLoaderService {
-  private fileCache = new Map<string, Observable<Dictionary<string>>>();
+  private fileCache = new Map<string, Observable<Record<string, string>>>();
 
   constructor(private http: HttpClient) {
     // Preload this file since it's used in every demos
@@ -25,7 +24,9 @@ export class DemoFileLoaderService {
         responseType: 'text',
       })
       .pipe(
-        switchMap((fileContent) => this.loadAdditionnalFilesIfNecessary(fileContent)),
+        switchMap((fileContent) =>
+          this.loadAdditionnalFilesIfNecessary(fileContent)
+        ),
         shareReplay(1)
       );
     this.fileCache.set(exampleName, req$);

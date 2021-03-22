@@ -1,5 +1,3 @@
-import { Control, IControl } from 'mapbox-gl';
-import { MapService } from '../map/map.service';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -9,6 +7,8 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
+import { IControl } from 'mapbox-gl';
+import { MapService } from '../map/map.service';
 
 export class CustomControl implements IControl {
   constructor(private container: HTMLElement) {}
@@ -28,10 +28,12 @@ export class CustomControl implements IControl {
 
 @Component({
   selector: 'mgl-control',
-  template: '<div class="mapboxgl-ctrl" #content><ng-content></ng-content></div>',
+  template:
+    '<div class="mapboxgl-ctrl" #content><ng-content></ng-content></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ControlComponent implements OnDestroy, AfterContentInit {
+export class ControlComponent<T extends IControl>
+  implements OnDestroy, AfterContentInit {
   private controlAdded = false;
 
   /* Init inputs */
@@ -39,7 +41,7 @@ export class ControlComponent implements OnDestroy, AfterContentInit {
 
   @ViewChild('content', { static: true }) content: ElementRef;
 
-  control: Control | IControl;
+  control: T | CustomControl;
 
   constructor(private MapService: MapService) {}
 

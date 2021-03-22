@@ -3,7 +3,10 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { AttributionControlDirective } from './control/attribution-control.directive';
 import { ControlComponent } from './control/control.component';
 import { FullscreenControlDirective } from './control/fullscreen-control.directive';
-import { GeocoderControlDirective, MAPBOX_GEOCODER_API_KEY } from './control/geocoder-control.directive';
+import {
+  GeocoderControlDirective,
+  MAPBOX_GEOCODER_API_KEY,
+} from './control/geocoder-control.directive';
 import { GeolocateControlDirective } from './control/geolocate-control.directive';
 import { NavigationControlDirective } from './control/navigation-control.directive';
 import { ScaleControlDirective } from './control/scale-control.directive';
@@ -23,6 +26,7 @@ import { CanvasSourceComponent } from './source/canvas-source.component';
 import { FeatureComponent } from './source/geojson/feature.component';
 import { GeoJSONSourceComponent } from './source/geojson/geojson-source.component';
 import { ImageSourceComponent } from './source/image-source.component';
+import { RasterDemSourceComponent } from './source/raster-dem-source.component';
 import { RasterSourceComponent } from './source/raster-source.component';
 import { VectorSourceComponent } from './source/vector-source.component';
 import { VideoSourceComponent } from './source/video-source.component';
@@ -36,6 +40,7 @@ import { VideoSourceComponent } from './source/video-source.component';
     ImageComponent,
     VectorSourceComponent,
     GeoJSONSourceComponent,
+    RasterDemSourceComponent,
     RasterSourceComponent,
     ImageSourceComponent,
     VideoSourceComponent,
@@ -61,6 +66,7 @@ import { VideoSourceComponent } from './source/video-source.component';
     ImageComponent,
     VectorSourceComponent,
     GeoJSONSourceComponent,
+    RasterDemSourceComponent,
     RasterSourceComponent,
     ImageSourceComponent,
     VideoSourceComponent,

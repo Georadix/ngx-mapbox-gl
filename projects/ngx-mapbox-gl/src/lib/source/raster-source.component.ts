@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { RasterSource } from 'mapbox-gl';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -9,19 +17,22 @@ import { MapService } from '../map/map.service';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RasterSourceComponent implements OnInit, OnDestroy, OnChanges, RasterSource {
+export class RasterSourceComponent
+  implements OnInit, OnDestroy, OnChanges, RasterSource {
   /* Init inputs */
   @Input() id: string;
 
   /* Dynamic inputs */
-  @Input() url: string;
-  @Input() tiles?: string[];
-  @Input() bounds?: number[];
-  @Input() minzoom?: number;
-  @Input() maxzoom?: number;
-  @Input() tileSize?: number;
+  @Input() url?: RasterSource['url'];
+  @Input() tiles?: RasterSource['tiles'];
+  @Input() bounds?: RasterSource['bounds'];
+  @Input() minzoom?: RasterSource['minzoom'];
+  @Input() maxzoom?: RasterSource['maxzoom'];
+  @Input() tileSize?: RasterSource['tileSize'];
+  @Input() scheme?: RasterSource['scheme'];
+  @Input() attribution?: RasterSource['attribution'];
 
-  type: 'raster' = 'raster'; // Just to make ts happy
+  type: RasterSource['type'] = 'raster';
 
   private sourceAdded = false;
   private sub = new Subscription();
@@ -51,7 +62,9 @@ export class RasterSourceComponent implements OnInit, OnDestroy, OnChanges, Rast
       (changes.bounds && !changes.bounds.isFirstChange()) ||
       (changes.minzoom && !changes.minzoom.isFirstChange()) ||
       (changes.maxzoom && !changes.maxzoom.isFirstChange()) ||
-      (changes.tileSize && !changes.tileSize.isFirstChange())
+      (changes.tileSize && !changes.tileSize.isFirstChange()) ||
+      (changes.scheme && !changes.scheme.isFirstChange()) ||
+      (changes.attribution && !changes.attribution.isFirstChange())
     ) {
       this.ngOnDestroy();
       this.ngOnInit();
@@ -62,11 +75,12 @@ export class RasterSourceComponent implements OnInit, OnDestroy, OnChanges, Rast
     this.sub.unsubscribe();
     if (this.sourceAdded) {
       this.MapService.removeSource(this.id);
+      this.sourceAdded = false;
     }
   }
 
   private init() {
-    const source = {
+    const source: RasterSource = {
       type: this.type,
       url: this.url,
       tiles: this.tiles,
@@ -74,6 +88,8 @@ export class RasterSourceComponent implements OnInit, OnDestroy, OnChanges, Rast
       minzoom: this.minzoom,
       maxzoom: this.maxzoom,
       tileSize: this.tileSize,
+      scheme: this.scheme,
+      attribution: this.attribution,
     };
     this.MapService.addSource(this.id, source);
     this.sourceAdded = true;

@@ -1,6 +1,6 @@
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BackgroundPaint } from 'mapbox-gl';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { BackgroundLayer } from 'mapbox-gl';
 import { of } from 'rxjs';
 import { MapService, SetupLayer } from '../map/map.service';
 import { LayerComponent } from './layer.component';
@@ -22,17 +22,19 @@ describe('LayerComponent', () => {
   let component: LayerComponent;
   let fixture: ComponentFixture<LayerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [LayerComponent],
-    })
-      .overrideComponent(LayerComponent, {
-        set: {
-          providers: [{ provide: MapService, useClass: MapServiceSpy }],
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [LayerComponent],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(LayerComponent, {
+          set: {
+            providers: [{ provide: MapService, useClass: MapServiceSpy }],
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LayerComponent);
@@ -44,9 +46,12 @@ describe('LayerComponent', () => {
   describe('Init/Destroy tests', () => {
     it('should init with custom inputs', (done: DoneFn) => {
       component.paint = { 'background-color': 'green' };
+      component.type = 'background';
       msSpy.addLayer.and.callFake((options: SetupLayer) => {
         expect(options.layerOptions.id).toEqual(component.id);
-        expect((<BackgroundPaint>options.layerOptions.paint)['background-color']).toEqual('green');
+        expect(
+          (<BackgroundLayer>options.layerOptions).paint!['background-color']
+        ).toEqual('green');
         done();
       });
       fixture.detectChanges();
@@ -76,7 +81,10 @@ describe('LayerComponent', () => {
       component.ngOnChanges({
         paint: new SimpleChange(null, component.paint, false),
       });
-      expect(msSpy.setAllLayerPaintProperty).toHaveBeenCalledWith(component.id, component.paint);
+      expect(msSpy.setAllLayerPaintProperty).toHaveBeenCalledWith(
+        component.id,
+        component.paint
+      );
     });
   });
 });

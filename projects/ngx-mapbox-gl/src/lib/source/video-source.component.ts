@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { VideoSourceOptions } from 'mapbox-gl';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { VideoSource, VideoSourceOptions, VideoSourceRaw } from 'mapbox-gl';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MapService } from '../map/map.service';
@@ -9,13 +17,14 @@ import { MapService } from '../map/map.service';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VideoSourceComponent implements OnInit, OnDestroy, OnChanges, VideoSourceOptions {
+export class VideoSourceComponent
+  implements OnInit, OnDestroy, OnChanges, VideoSourceOptions {
   /* Init inputs */
   @Input() id: string;
 
   /* Dynamic inputs */
-  @Input() urls: string[];
-  @Input() coordinates: number[][];
+  @Input() urls: VideoSourceOptions['urls'];
+  @Input() coordinates: VideoSourceOptions['coordinates'];
 
   private sourceAdded = false;
   private sub = new Subscription();
@@ -39,12 +48,13 @@ export class VideoSourceComponent implements OnInit, OnDestroy, OnChanges, Video
     if (!this.sourceAdded) {
       return;
     }
-    if (
-      (changes.urls && !changes.urls.isFirstChange()) ||
-      (changes.coordinates && !changes.coordinates.isFirstChange())
-    ) {
+
+    if (changes.urls && !changes.urls.isFirstChange()) {
       this.ngOnDestroy();
       this.ngOnInit();
+    } else if (changes.coordinates && !changes.coordinates.isFirstChange()) {
+      const source = this.MapService.getSource<VideoSource>(this.id);
+      source.setCoordinates(this.coordinates!);
     }
   }
 
@@ -52,15 +62,17 @@ export class VideoSourceComponent implements OnInit, OnDestroy, OnChanges, Video
     this.sub.unsubscribe();
     if (this.sourceAdded) {
       this.MapService.removeSource(this.id);
+      this.sourceAdded = false;
     }
   }
 
   private init() {
-    this.MapService.addSource(this.id, {
+    const source: VideoSourceRaw = {
       type: 'video',
       urls: this.urls,
       coordinates: this.coordinates,
-    });
+    };
+    this.MapService.addSource(this.id, source);
     this.sourceAdded = true;
   }
 }

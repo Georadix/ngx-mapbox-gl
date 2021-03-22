@@ -20,6 +20,7 @@ Include the following components:
 - [mgl-geojson-source](https://github.com/Wykks/ngx-mapbox-gl/wiki/API-Documentation#mgl-geojson-source-mapbox-gl-style-spec)
 - [mgl-canvas-source](https://github.com/Wykks/ngx-mapbox-gl/wiki/API-Documentation#mgl-canvas-source-mapbox-gl-style-spec)
 - [mgl-image-source](https://github.com/Wykks/ngx-mapbox-gl/wiki/API-Documentation#mgl-image-source-mapbox-gl-style-spec)
+- [mgl-raster-dem-source](https://github.com/Wykks/ngx-mapbox-gl/wiki/API-Documentation#mgl-raster-dem-source-mapbox-gl-style-spec)
 - [mgl-raster-source](https://github.com/Wykks/ngx-mapbox-gl/wiki/API-Documentation#mgl-raster-source-mapbox-gl-style-spec)
 - [mgl-vector-source](https://github.com/Wykks/ngx-mapbox-gl/wiki/API-Documentation#mgl-vector-source-mapbox-gl-style-spec)
 - [mgl-video-source](https://github.com/Wykks/ngx-mapbox-gl/wiki/API-Documentation#mgl-video-source-mapbox-gl-style-spec)
@@ -94,7 +95,8 @@ export class AppModule {}
 
 How to get a Mapbox token: https://www.mapbox.com/help/how-access-tokens-work/
 
-Note: `mapbox-gl` can work without a token, if you have your own source, for example: https://stackblitz.com/edit/ngx-mapbox-gl-without-token
+Note: `mapbox-gl` cannot work without a token anymore.
+If you want to keep using their services then make a free account, generate a new token for your application and use it inside your project.
 
 You can use https://github.com/klokantech/tileserver-gl to serve vector tiles.
 
@@ -104,7 +106,14 @@ Display a map:
 import { Component } from '@angular/core';
 
 @Component({
-  template: ` <mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [zoom]="[9]" [center]="[-74.5, 40]"> </mgl-map> `,
+  template: `
+    <mgl-map
+      [style]="'mapbox://styles/mapbox/streets-v9'"
+      [zoom]="[9]"
+      [center]="[-74.5, 40]"
+    >
+    </mgl-map>
+  `,
   styles: [
     `
       mgl-map {
@@ -166,7 +175,9 @@ export interface IMyLibMapModuleConfig {
   imports: [CommonModule, NgxMapboxGLModule],
 })
 export class MyLibMapModule {
-  static forRoot(config: IMyLibMapModuleConfig): ModuleWithProviders<MyLibMapModule> {
+  static forRoot(
+    config: IMyLibMapModuleConfig
+  ): ModuleWithProviders<MyLibMapModule> {
     return {
       ngModule: MyLibMapModule,
       providers: [

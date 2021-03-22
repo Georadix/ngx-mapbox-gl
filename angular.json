@@ -10,7 +10,7 @@
       "prefix": "mgl",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ngx-mapbox-gl/tsconfig.lib.json",
             "project": "projects/ngx-mapbox-gl/ng-package.json"
@@ -33,7 +33,10 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["projects/ngx-mapbox-gl/tsconfig.lib.json", "projects/ngx-mapbox-gl/tsconfig.spec.json"],
+            "tsConfig": [
+              "projects/ngx-mapbox-gl/tsconfig.lib.json",
+              "projects/ngx-mapbox-gl/tsconfig.spec.json"
+            ],
             "exclude": ["**/node_modules/**"],
             "format": "stylish"
           }
@@ -50,7 +53,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["@mapbox/mapbox-gl-geocoder", "@mapbox/mapbox-sdk", "suggestions"],
+            "allowedCommonJsDependencies": [
+              "@mapbox/mapbox-gl-geocoder",
+              "@mapbox/mapbox-sdk",
+              "suggestions"
+            ],
             "aot": true,
             "outputPath": "dist/showcase",
             "index": "projects/showcase/src/index.html",
@@ -83,7 +90,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -119,13 +125,19 @@
             "karmaConfig": "projects/showcase/karma.conf.js",
             "styles": ["projects/showcase/src/styles.css"],
             "scripts": [],
-            "assets": ["projects/showcase/src/favicon.ico", "projects/showcase/src/assets"]
+            "assets": [
+              "projects/showcase/src/favicon.ico",
+              "projects/showcase/src/assets"
+            ]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["projects/showcase/tsconfig.app.json", "projects/showcase/tsconfig.spec.json"],
+            "tsConfig": [
+              "projects/showcase/tsconfig.app.json",
+              "projects/showcase/tsconfig.spec.json"
+            ],
             "exclude": ["**/node_modules/**"],
             "format": "stylish"
           }
@@ -159,5 +171,8 @@
       }
     }
   },
-  "defaultProject": "ngx-mapbox-gl"
+  "defaultProject": "ngx-mapbox-gl",
+  "cli": {
+    "analytics": "2b945751-c795-4db1-b8ac-172907057b11"
+  }
 }

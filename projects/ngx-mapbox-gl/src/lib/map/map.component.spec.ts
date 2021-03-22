@@ -1,5 +1,11 @@
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, flushMicrotasks, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  flushMicrotasks,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs';
 import { MapComponent } from './map.component';
 import { MapService, SetupMap } from './map.service';
@@ -8,6 +14,8 @@ describe('MapComponent', () => {
   class MapServiceSpy {
     setup = jasmine.createSpy('setup');
     updateMinZoom = jasmine.createSpy('updateMinZoom');
+    updateMaxPitch = jasmine.createSpy('updateMaxPitch');
+    updateMinPitch = jasmine.createSpy('updateMinPitch');
     destroyMap = jasmine.createSpy('destroyMap');
     mapCreated$ = new ReplaySubject(1);
   }
@@ -16,17 +24,19 @@ describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MapComponent],
-    })
-      .overrideComponent(MapComponent, {
-        set: {
-          providers: [{ provide: MapService, useClass: MapServiceSpy }],
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MapComponent],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MapComponent, {
+          set: {
+            providers: [{ provide: MapService, useClass: MapServiceSpy }],
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MapComponent);
@@ -61,6 +71,26 @@ describe('MapComponent', () => {
       });
       flushMicrotasks();
       expect(msSpy.updateMinZoom).toHaveBeenCalledWith(6);
+    }));
+
+    it('should update minpitch', fakeAsync(() => {
+      msSpy.mapCreated$.complete();
+      component.minPitch = 15;
+      component.ngOnChanges({
+        minPitch: new SimpleChange(null, component.minPitch, false),
+      });
+      flushMicrotasks();
+      expect(msSpy.updateMinPitch).toHaveBeenCalledWith(15);
+    }));
+
+    it('should update maxpitch', fakeAsync(() => {
+      msSpy.mapCreated$.complete();
+      component.maxPitch = 25;
+      component.ngOnChanges({
+        maxPitch: new SimpleChange(null, component.maxPitch, false),
+      });
+      flushMicrotasks();
+      expect(msSpy.updateMaxPitch).toHaveBeenCalledWith(25);
     }));
   });
 });
